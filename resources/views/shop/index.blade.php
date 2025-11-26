@@ -161,7 +161,7 @@
                 <!-- Pagination -->
                 @if($books->hasPages())
                 <div class="pagination-wrapper">
-                    {{ $books->links() }}
+                    {{ $books->links('vendor.pagination.custom') }}
                 </div>
                 @endif
             </div>
@@ -548,8 +548,69 @@
 /* Pagination */
 .pagination-wrapper {
     margin-top: 40px;
+    padding: 30px 20px;
     display: flex;
     justify-content: center;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.custom-pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.custom-pagination .arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.custom-pagination .arrow:hover:not(.disabled) {
+    color: #000;
+    transform: scale(1.1);
+}
+
+.custom-pagination .arrow.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.custom-pagination .page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.custom-pagination .page:hover:not(.active) {
+    background: #e0e0e0;
+}
+
+.custom-pagination .page.active {
+    background: #5B4AB3;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(91, 74, 179, 0.3);
+}
+
+.custom-pagination .dots {
+    color: #999;
+    padding: 0 5px;
 }
 
 /* Responsive */

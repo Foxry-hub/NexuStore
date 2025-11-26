@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminBukuController;
@@ -13,8 +14,10 @@ use App\Http\Controllers\ShopController;
 // Public Routes
 Route::get('/', function () {
     // Redirect to dashboard if authenticated
-    if (auth()->check()) {
-        if (auth()->user()->isAdmin()) {
+    if (Auth::check()) {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        if ($user->isAdmin()) {
             return redirect()->route('admin.dashboard');
         }
         return redirect()->route('pelanggan.dashboard');
@@ -39,7 +42,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 // Dashboard Routes
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
-        if (auth()->user()->isAdmin()) {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        if ($user->isAdmin()) {
             return redirect()->route('admin.dashboard');
         }
         return redirect()->route('pelanggan.dashboard');
