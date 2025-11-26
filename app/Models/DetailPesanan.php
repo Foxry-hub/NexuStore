@@ -10,19 +10,17 @@ class DetailPesanan extends Model
     use HasFactory;
 
     protected $table = 't_detail_pesanan';
-    protected $primaryKey = 'id_detail_pesanan';
+    protected $primaryKey = 'id_detail';
 
     protected $fillable = [
         'id_pesanan',
         'id_buku',
         'jumlah',
-        'harga_satuan',
-        'subtotal',
+        'total',
     ];
 
     protected $casts = [
-        'harga_satuan' => 'decimal:2',
-        'subtotal' => 'decimal:2',
+        'total' => 'decimal:2',
     ];
 
     public function pesanan()
@@ -33,5 +31,13 @@ class DetailPesanan extends Model
     public function buku()
     {
         return $this->belongsTo(Buku::class, 'id_buku', 'id_buku');
+    }
+
+    /**
+     * Get harga satuan from buku
+     */
+    public function getHargaSatuanAttribute()
+    {
+        return $this->total / $this->jumlah;
     }
 }

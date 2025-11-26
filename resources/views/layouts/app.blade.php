@@ -24,11 +24,20 @@
                     <a href="{{ route('home') }}" class="nav-link">
                         <i class="fas fa-home"></i>
                     </a>
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-heart"></i>
-                    </a>
                     @auth
                         @if(Auth::user()->isPelanggan())
+                            <a href="{{ route('keranjang.index') }}" class="nav-link cart-link">
+                                <i class="fas fa-shopping-cart"></i>
+                                @php
+                                    $cartCount = \App\Http\Controllers\KeranjangController::getCartCount();
+                                @endphp
+                                @if($cartCount > 0)
+                                    <span class="cart-badge">{{ $cartCount }}</span>
+                                @endif
+                            </a>
+                            <a href="{{ route('pesanan.index') }}" class="nav-link">
+                                <i class="fas fa-box"></i>
+                            </a>
                             <a href="{{ route('pelanggan.profile') }}" class="nav-link">
                                 <i class="fas fa-user"></i>
                             </a>

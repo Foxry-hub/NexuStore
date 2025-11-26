@@ -33,4 +33,44 @@ class Buku extends Model
     {
         return $this->belongsTo(Kategori::class, 'id_kategori', 'id_kategori');
     }
+
+    /**
+     * Get the reviews for the book.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'id_buku', 'id_buku');
+    }
+
+    /**
+     * Get approved reviews only.
+     */
+    public function approvedReviews()
+    {
+        return $this->hasMany(Review::class, 'id_buku', 'id_buku')->where('is_approved', true);
+    }
+
+    /**
+     * Get average rating.
+     */
+    public function getAverageRatingAttribute()
+    {
+        return $this->approvedReviews()->avg('rating') ?? 0;
+    }
+
+    /**
+     * Get total reviews count.
+     */
+    public function getReviewsCountAttribute()
+    {
+        return $this->approvedReviews()->count();
+    }
+
+    /**
+     * Get rating rounded.
+     */
+    public function getRatingRoundedAttribute()
+    {
+        return round($this->average_rating);
+    }
 }
