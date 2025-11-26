@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('t_buku', function (Blueprint $table) {
             $table->id('id_buku');
             $table->foreignId('id_kategori')->constrained('t_kategori', 'id_kategori')->onDelete('cascade');
-            $table->string('judul');
-            $table->string('penulis');
-            $table->string('penerbit');
+            $table->string('judul', 200);
+            $table->string('penulis', 100);
+            $table->string('penerbit', 100);
             $table->year('tahun_terbit');
+            $table->string('isbn', 20)->nullable()->unique();
+            $table->integer('jumlah_halaman');
             $table->text('deskripsi')->nullable();
             $table->decimal('harga', 10, 2);
             $table->integer('stok')->default(0);

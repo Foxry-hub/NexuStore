@@ -67,4 +67,12 @@ class User extends Authenticatable
     {
         return $this->role === 'pelanggan';
     }
+
+    /**
+     * Get pesanan for the user
+     */
+    public function pesanan()
+    {
+        return $this->hasMany(Pesanan::class, 'id_user', 'id_user');
+    }
 }

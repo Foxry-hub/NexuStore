@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
@@ -27,19 +28,19 @@
                     <i class="fas fa-home"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="{{ route('admin.buku.index') }}" class="nav-item {{ request()->routeIs('admin.buku.*') ? 'active' : '' }}">
                     <i class="fas fa-book"></i>
                     <span>Kelola Buku</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="{{ route('admin.kategori.index') }}" class="nav-item {{ request()->routeIs('admin.kategori.*') ? 'active' : '' }}">
                     <i class="fas fa-folder"></i>
                     <span>Kategori</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="{{ route('admin.pesanan.index') }}" class="nav-item {{ request()->routeIs('admin.pesanan.*') ? 'active' : '' }}">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Pesanan</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="{{ route('admin.pelanggan.index') }}" class="nav-item {{ request()->routeIs('admin.pelanggan.*') ? 'active' : '' }}">
                     <i class="fas fa-users"></i>
                     <span>Pelanggan</span>
                 </a>
