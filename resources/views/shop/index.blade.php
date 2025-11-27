@@ -25,8 +25,11 @@
             <!-- Sidebar Filter -->
             <aside class="shop-sidebar">
                 <form action="{{ route('shop.index') }}" method="GET" id="filterForm">
-                    <!-- Keep sort parameter -->
+                    <!-- Keep sort and search parameter -->
                     <input type="hidden" name="sort" value="{{ request('sort', 'terbaru') }}">
+                    @if(request('search'))
+                    <input type="hidden" name="search" value="{{ request('search') }}">
+                    @endif
                     
                     <!-- Filter by Price -->
                     <div class="filter-widget">
@@ -112,10 +115,48 @@
 
             <!-- Main Content -->
             <div class="shop-main">
+                <!-- Search Bar -->
+                <div class="search-bar-container">
+                    <form action="{{ route('shop.index') }}" method="GET" class="search-form">
+                        <!-- Preserve existing filter params -->
+                        <input type="hidden" name="min_price" value="{{ request('min_price', 0) }}">
+                        <input type="hidden" name="max_price" value="{{ request('max_price', 500000) }}">
+                        <input type="hidden" name="sort" value="{{ request('sort', 'terbaru') }}">
+                        @if(request('kategori'))
+                            @foreach((array)request('kategori') as $kat)
+                            <input type="hidden" name="kategori[]" value="{{ $kat }}">
+                            @endforeach
+                        @endif
+                        @if(request('rating'))
+                            @foreach((array)request('rating') as $rat)
+                            <input type="hidden" name="rating[]" value="{{ $rat }}">
+                            @endforeach
+                        @endif
+                        <div class="search-input-wrapper">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" name="search" class="search-input" placeholder="Cari buku berdasarkan judul..." value="{{ request('search') }}">
+                            @if(request('search'))
+                            <a href="{{ route('shop.index', request()->except('search')) }}" class="search-clear">
+                                <i class="fas fa-times"></i>
+                            </a>
+                            @endif
+                        </div>
+                        <button type="submit" class="search-btn">
+                            <i class="fas fa-search"></i> Cari
+                        </button>
+                    </form>
+                </div>
+
                 <!-- Toolbar -->
                 <div class="shop-toolbar">
                     <div class="toolbar-left">
-                        <span class="result-count">Showing 1-{{ $books->count() }} of {{ $books->total() }} results</span>
+                        <span class="result-count">
+                            @if(request('search'))
+                                Hasil pencarian "{{ request('search') }}": {{ $books->total() }} buku ditemukan
+                            @else
+                                Showing 1-{{ $books->count() }} of {{ $books->total() }} results
+                            @endif
+                        </span>
                     </div>
                     
                     <div class="toolbar-right">
@@ -123,6 +164,9 @@
                             <!-- Preserve existing filter params -->
                             <input type="hidden" name="min_price" value="{{ request('min_price', 0) }}">
                             <input type="hidden" name="max_price" value="{{ request('max_price', 500000) }}">
+                            @if(request('search'))
+                            <input type="hidden" name="search" value="{{ request('search') }}">
+                            @endif
                             @if(request('kategori'))
                                 @foreach((array)request('kategori') as $kat)
                                 <input type="hidden" name="kategori[]" value="{{ $kat }}">
@@ -154,9 +198,17 @@
                 </div>
 
                 <!-- Active Filters -->
-                @if(request()->hasAny(['kategori', 'rating']) || request('min_price', 0) > 0 || request('max_price', 500000) < 500000)
+                @if(request()->hasAny(['kategori', 'rating', 'search']) || request('min_price', 0) > 0 || request('max_price', 500000) < 500000)
                 <div class="active-filters">
                     <span class="active-label">Active Filters:</span>
+                    @if(request('search'))
+                        <span class="filter-tag">
+                            <i class="fas fa-search"></i> "{{ request('search') }}"
+                            <a href="{{ route('shop.index', request()->except('search')) }}" class="remove-filter">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        </span>
+                    @endif
                     @if(request('min_price', 0) > 0 || request('max_price', 500000) < 500000)
                         <span class="filter-tag">
                             Rp {{ number_format(request('min_price', 0), 0, ',', '.') }} - Rp {{ number_format(request('max_price', 500000), 0, ',', '.') }}
@@ -550,11 +602,103 @@
     font-weight: 500;
 }
 
+.filter-tag .remove-filter {
+    color: white;
+    opacity: 0.7;
+    margin-left: 5px;
+    transition: opacity 0.3s;
+}
+
+.filter-tag .remove-filter:hover {
+    opacity: 1;
+}
+
 /* Shop Main */
 .shop-main {
     background-color: white;
     padding: 25px;
     border-radius: 10px;
+}
+
+/* Search Bar */
+.search-bar-container {
+    margin-bottom: 25px;
+}
+
+.search-form {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.search-input-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    color: #999;
+    font-size: 16px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 14px 45px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s;
+    background: #f8f8f8;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(91, 74, 179, 0.1);
+}
+
+.search-input::placeholder {
+    color: #aaa;
+}
+
+.search-clear {
+    position: absolute;
+    right: 15px;
+    color: #999;
+    text-decoration: none;
+    padding: 5px;
+    transition: color 0.3s;
+}
+
+.search-clear:hover {
+    color: #ff4444;
+}
+
+.search-btn {
+    padding: 14px 25px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.search-btn:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(91, 74, 179, 0.3);
 }
 
 .shop-toolbar {
@@ -856,6 +1000,19 @@
 }
 
 @media (max-width: 576px) {
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .search-input-wrapper {
+        width: 100%;
+    }
+    
+    .search-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
     .shop-toolbar {
         flex-direction: column;
         gap: 15px;
