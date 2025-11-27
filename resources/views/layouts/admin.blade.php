@@ -44,16 +44,12 @@
                     <i class="fas fa-users"></i>
                     <span>Pelanggan</span>
                 </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Laporan</span>
-                </a>
             </nav>
 
             <div class="sidebar-footer">
-                <form action="{{ route('logout') }}" method="POST" class="logout-form">
+                <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit" class="nav-item logout-btn">
+                    <button type="submit" class="logout-btn">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Logout</span>
                     </button>

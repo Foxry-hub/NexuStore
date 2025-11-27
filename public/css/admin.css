@@ -107,25 +107,38 @@
 }
 
 .sidebar-footer {
-    padding: 20px;
+    padding: 15px 20px;
     border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-.logout-form {
+.sidebar-footer form {
     margin: 0;
 }
 
 .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
     width: 100%;
-    background: rgba(255,255,255,0.1);
+    padding: 15px 25px;
+    background: transparent;
     border: none;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    transition: all 0.3s;
+    border-radius: 8px;
 }
 
 .logout-btn:hover {
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(255,255,255,0.1);
+    color: var(--white);
+}
+
+.logout-btn i {
+    width: 20px;
+    font-size: 18px;
 }
 
 /* Main Content Area */

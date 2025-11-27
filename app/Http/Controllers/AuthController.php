@@ -58,6 +58,7 @@ class AuthController extends Controller
             'username' => 'required|string|max:255|unique:t_user',
             'nama_lengkap' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:t_user',
+            'no_telp' => 'required|string|max:20',
             'alamat' => 'required|string|max:500',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -66,6 +67,7 @@ class AuthController extends Controller
             'username' => $request->username,
             'nama_lengkap' => $request->nama_lengkap,
             'email' => $request->email,
+            'no_telp' => $request->no_telp,
             'alamat' => $request->alamat,
             'password' => Hash::make($request->password),
             'role' => 'pelanggan',

@@ -66,6 +66,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="no_telp"><i class="fas fa-phone"></i> No. Telepon</label>
+                        <input type="text" id="no_telp" name="no_telp" value="{{ old('no_telp') }}" required class="form-control" placeholder="081234567890">
+                    </div>
+
+                    <div class="form-group">
                         <label for="alamat"><i class="fas fa-map-marker-alt"></i> Alamat</label>
                         <textarea id="alamat" name="alamat" required class="form-control" rows="3" placeholder="Masukkan alamat lengkap untuk pengiriman...">{{ old('alamat') }}</textarea>
                     </div>

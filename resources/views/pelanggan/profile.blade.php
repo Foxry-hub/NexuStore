@@ -68,6 +68,14 @@
 
                         <div class="info-item">
                             <div class="info-label">
+                                <i class="fas fa-phone"></i>
+                                <span>No. Telepon</span>
+                            </div>
+                            <div class="info-value">{{ Auth::user()->no_telp ?? 'Belum diisi' }}</div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-label">
                                 <i class="fas fa-map-marker-alt"></i>
                                 <span>Alamat</span>
                             </div>
@@ -103,16 +111,6 @@
                     <div class="stat-info">
                         <h4>{{ $totalPesanan ?? 0 }}</h4>
                         <p>Total Pesanan</p>
-                    </div>
-                </div>
-
-                <div class="stat-card-profile">
-                    <div class="stat-icon pink">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h4>0</h4>
-                        <p>Wishlist</p>
                     </div>
                 </div>
 
@@ -163,6 +161,11 @@
                 <div class="form-group">
                     <label for="email"><i class="fas fa-envelope"></i> Email</label>
                     <input type="email" id="email" name="email" class="form-control" value="{{ Auth::user()->email }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="no_telp"><i class="fas fa-phone"></i> No. Telepon</label>
+                    <input type="text" id="no_telp" name="no_telp" class="form-control" value="{{ Auth::user()->no_telp }}" placeholder="Contoh: 081234567890">
                 </div>
 
                 <div class="form-group">
@@ -490,7 +493,7 @@
 
 .profile-stats {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     margin-bottom: 30px;
 }

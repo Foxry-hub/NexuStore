@@ -181,32 +181,22 @@
                 <!-- Products Grid -->
                 <div class="products-grid">
                     @forelse($books as $book)
-                    <div class="product-card">
+                    <a href="{{ route('shop.show', $book->id_buku) }}" class="product-card">
                         <div class="product-image">
                             <img src="{{ $book->gambar_cover ? asset('storage/' . $book->gambar_cover) : 'https://via.placeholder.com/200x280/5B4AB3/ffffff?text=' . urlencode($book->judul) }}" alt="{{ $book->judul }}">
-                            <div class="product-actions">
-                                <a href="{{ route('shop.show', $book->id_buku) }}" class="action-btn" title="Quick View">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                @auth
-                                    @if(Auth::user()->isPelanggan())
-                                        <form action="{{ route('keranjang.add') }}" method="POST" style="display: inline;">
-                                            @csrf
-                                            <input type="hidden" name="id_buku" value="{{ $book->id_buku }}">
-                                            <button type="submit" class="action-btn" title="Add to Cart" {{ $book->stok < 1 ? 'disabled' : '' }}>
-                                                <i class="fas fa-shopping-cart"></i>
-                                            </button>
-                                        </form>
-                                    @endif
-                                @else
-                                    <a href="{{ route('login') }}" class="action-btn" title="Login untuk Tambah ke Keranjang">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </a>
-                                @endauth
-                                <button class="action-btn" title="Add to Wishlist">
-                                    <i class="fas fa-heart"></i>
-                                </button>
-                            </div>
+                            @auth
+                                @if(Auth::user()->isPelanggan())
+                                <div class="product-actions">
+                                    <form action="{{ route('keranjang.add') }}" method="POST" class="add-cart-form" onclick="event.stopPropagation();">
+                                        @csrf
+                                        <input type="hidden" name="id_buku" value="{{ $book->id_buku }}">
+                                        <button type="submit" class="action-btn" title="Add to Cart" {{ $book->stok < 1 ? 'disabled' : '' }}>
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                @endif
+                            @endauth
                         </div>
                         <div class="product-info">
                             <div class="product-rating">
@@ -219,15 +209,13 @@
                                 @endfor
                                 <span class="rating-count">({{ $book->reviews_count }})</span>
                             </div>
-                            <h3 class="product-title">
-                                <a href="{{ route('shop.show', $book->id_buku) }}">{{ $book->judul }}</a>
-                            </h3>
+                            <h3 class="product-title">{{ $book->judul }}</h3>
                             <p class="product-author">{{ $book->penulis }}</p>
                             <div class="product-price">
                                 <span class="price">Rp {{ number_format($book->harga, 0, ',', '.') }}</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
                     @empty
                     <div class="no-products">
                         <i class="fas fa-book"></i>
@@ -274,7 +262,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 14px;
+    font-size: 16px;
     position: relative;
     z-index: 1;
 }
@@ -627,11 +615,14 @@
 }
 
 .product-card {
+    display: block;
     background-color: white;
     border-radius: 10px;
     overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
     border: 1px solid #f0f0f0;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .product-card:hover {
@@ -667,9 +658,13 @@
     opacity: 1;
 }
 
+.add-cart-form {
+    display: inline;
+}
+
 .action-btn {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     background-color: white;
     border: none;
     border-radius: 50%;
@@ -679,6 +674,8 @@
     cursor: pointer;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     transition: all 0.3s;
+    color: var(--text-dark);
+    font-size: 20px;
 }
 
 .action-btn:hover {
@@ -712,18 +709,14 @@
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 5px;
-}
-
-.product-title a {
     color: var(--text-dark);
-    text-decoration: none;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-.product-title a:hover {
+.product-card:hover .product-title {
     color: var(--primary-color);
 }
 
