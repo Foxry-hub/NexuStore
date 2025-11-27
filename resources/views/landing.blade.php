@@ -158,10 +158,62 @@
     </div>
 </section>
 
-<!-- CTA Section -->
-<section class="cta-section">
+<!-- Contact Section -->
+<section class="contact-section" id="contact">
     <div class="container">
-        <button class="btn-primary btn-large">Continue</button>
+        <div class="contact-container">
+            <div class="contact-content">
+                <h2>Butuh <span class="highlight">Bantuan?</span></h2>
+                <p>Kami siap membantu Anda! Jika ada pertanyaan tentang produk, pemesanan, atau hal lainnya, jangan ragu untuk menghubungi kami via WhatsApp.</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-detail">
+                            <h4>WhatsApp</h4>
+                            <p>+62 813-8808-8171</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-detail">
+                            <h4>Jam Operasional</h4>
+                            <p>Senin - Sabtu, 09:00 - 21:00</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="contact-detail">
+                            <h4>Respon Cepat</h4>
+                            <p>Balasan dalam 5-10 menit</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://wa.me/6281388088171?text=Halo%20NEXUSTORE,%20saya%20ingin%20bertanya%20tentang%20produk%20buku." 
+                   class="btn-whatsapp" 
+                   target="_blank">
+                    <i class="fab fa-whatsapp"></i> Chat Sekarang
+                </a>
+            </div>
+            <div class="contact-illustration">
+                <div class="contact-card">
+                    <div class="chat-bubble incoming">
+                        <p>Halo, ada yang bisa dibantu? 👋</p>
+                    </div>
+                    <div class="chat-bubble outgoing">
+                        <p>Saya mau tanya tentang buku...</p>
+                    </div>
+                    <div class="chat-bubble incoming">
+                        <p>Tentu! Silakan tanyakan apa saja 😊</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 @endsection
